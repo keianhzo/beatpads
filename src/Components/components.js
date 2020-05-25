@@ -64,10 +64,7 @@ export class FTTAnalizable {
   }
   
   reset() {
-    this.url = null;
     this.size = 128;
-    this.sliceSize = 64;
-    this.minDb = 100;
   }
 }
 
@@ -77,10 +74,7 @@ export class FTTUpdatable {
   }
   
   reset() {
-    this.mesh = null;
-    this.index = 0;
     this.moving = false;
-    this.initialPos = new Vector3(0, 0, 0);
   }
 }
 

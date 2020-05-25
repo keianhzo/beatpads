@@ -1,7 +1,8 @@
 import { System } from "ecsy";
 import * as THREE from "three";
-import { Text, Position } from "ecsy-three";
+import { Text, Position, Object3D } from "ecsy-three";
 import {
+  Pad,
   Level,
   Target,
   Play,
@@ -63,55 +64,41 @@ export class LevelManager extends System {
     // Generators
     let worldSingleton = this.world.entityManager.getEntityByName("singleton");
 
-    const SIZE = 5;
-    const ANGLE = Math.PI / 10;
-    var index = 0;
-    for (var x = 0; x < SIZE; x++) {
-      for (var y = 0; y < SIZE; y++) {
-        var geometry = new THREE.PlaneGeometry(1.5, 1.5, 1);
-        const color = new THREE.Color();
-        const h = index / (SIZE * SIZE);
-        color.setHSL(h, 1.0, 0.5);
-        var material = new THREE.MeshBasicMaterial({
-          color: color,
-          side: THREE.DoubleSide
-        });
-        var plane = new THREE.Mesh(geometry, material);
-        plane.rotateOnAxis(new THREE.Vector3(0, 1, 0), 2 * ANGLE - x * ANGLE);
-        plane.translateY(1 + y * 2);
-        plane.translateZ(-10);
-        plane.visible = false;
-        const pad = this.world.createEntity().addComponent(FTTUpdatable, {
-          mesh: plane,
-          index: index,
-          initialPos: plane.position.clone()
-        });
-        index++;
-      }
-    }
+    // Create the pads pool
+    // for (var i = 0; i < level.sizeX * level.sizeY; i++) {
+    //   var geometry = new THREE.BoxBufferGeometry(1.5, 1.5, 1);
+    //   var material = new THREE.MeshBasicMaterial({ color: "#FFFFFF" });
+    //   var mesh = new THREE.Mesh(geometry, material);
+    //   var pad = this.world.createEntity();
+    //   pad
+    //     .addComponent(Pad)
+    //     .addComponent(Transform)
+    //     .addComponent(Object3D, {
+    //       value: mesh
+    //     })
+    //     .addComponent(Parent, { value: levelGroup })
+    //     .addComponent(Active, { vale: false });
+    // }
+
+    console.log("Pads pol created");
 
     const METAL = 0;
     const RUBBER = 1;
     const WOOD = 2;
     const STATIC = 3;
 
-    let radius = 10;
-
-    let N = 100;
+    let N = level.sizeX * level.sizeY;
     for (var i = 0; i < N; i++) {
-      let w = 2;
-      let h = 2;
-      let x = w / 2 - Math.random() * w;
-      let y = h / 2 - Math.random() * h + 2;
-
       let element = {
-        type: 3, //Math.floor(Math.random() * 4),
-        position: new THREE.Vector3(x, y, -radius - Math.random() * 10 - i),
+        type: STATIC, //Math.floor(Math.random() * 4),
+        position: new THREE.Vector3(0, 0, 0),
         rotation: new THREE.Vector3(0, 0, 0)
       };
 
       this.world
         .createEntity()
+        .addComponent(Pad)
+        .addComponent(Active)
         .addComponent(Element, {
           type: element.type
         })

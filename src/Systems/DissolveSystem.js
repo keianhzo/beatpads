@@ -33,7 +33,7 @@ export class DissolveSystem extends System {
 
       dissolve.value -= delta * dissolve.speed;
       if (dissolve.value <= 0) {
-        entity.remove();
+        // entity.remove();
       }
     }
   }

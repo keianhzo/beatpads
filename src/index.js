@@ -92,7 +92,6 @@ function initGame() {
   world = new World();
 
   world
-    .registerSystem(AudioGeneratorSystem)
     .registerSystem(InputSystem)
     .registerSystem(GameStateSystem)
     .registerSystem(LevelManager)
@@ -116,7 +115,8 @@ function initGame() {
     .registerSystem(TextGeometrySystem)
     .registerSystem(GameplaySystem)
     .registerSystem(GeometrySystem)
-    .registerSystem(GLTFLoaderSystem);
+    .registerSystem(GLTFLoaderSystem)
+    .registerSystem(AudioGeneratorSystem);
 
   let data = initialize(world, { vr: true });
 
@@ -152,30 +152,30 @@ function initGame() {
     light.shadow.mapSize.set(4096, 4096);
     scene.add(light);
 
-    let radius = 10;
-    let segments = 2;
-    let height = 10;
-    var geometry = new THREE.CylinderBufferGeometry(
-      radius,
-      radius,
-      height,
-      30,
-      20,
-      true,
-      0,
-      Math.PI
-    );
-    geometry.rotateY(Math.PI / 2);
-    geometry.translate(0, height / 2, 0);
-    var material = new THREE.MeshPhongMaterial({
-      color: 0x4444ff,
-      side: THREE.DoubleSide,
-      flatShading: true,
-      wireframe: true
-    });
-    var cylinder = new THREE.Mesh(geometry, material);
-    scene.add(cylinder);
-    window.scene = scene;
+    // let radius = 10;
+    // let segments = 2;
+    // let height = 10;
+    // var geometry = new THREE.CylinderBufferGeometry(
+    //   radius,
+    //   radius,
+    //   height,
+    //   30,
+    //   20,
+    //   true,
+    //   0,
+    //   Math.PI
+    // );
+    // geometry.rotateY(Math.PI / 2);
+    // geometry.translate(0, height / 2, 0);
+    // var material = new THREE.MeshPhongMaterial({
+    //   color: 0x4444ff,
+    //   side: THREE.DoubleSide,
+    //   flatShading: true,
+    //   wireframe: true
+    // });
+    // var cylinder = new THREE.Mesh(geometry, material);
+    // scene.add(cylinder);
+    // window.scene = scene;
 
     //scene.add( new THREE.CameraHelper( light.shadow.camera ) );
 
@@ -205,7 +205,7 @@ function initGame() {
 
     world
       .createEntity("AudioGeneratorSystem")
-      .addComponent(FTTAnalizable, {url: "assets/376737_Skullbeatz___Bad_Cat_Maste.mp3", size: 256, minDb: 100})
+      .addComponent(FTTAnalizable, {size: 256})
 
     // let startButton = world
     //   .createEntity("startbutton")
@@ -256,23 +256,6 @@ function initGame() {
       .addComponent(Object3D, { value: new THREE.Group() })
       .addComponent(Parent, { value: data.entities.scene })
       .addComponent(Visible, { value: true });
-
-    // Create a pads pool
-    // const SIZE = 5;
-    // for (var i=0; i<SIZE*SIZE; i++) {
-    //   var geometry = new THREE.BoxBufferGeometry( 1.5, 1.5, 1 );
-    //   var material = new THREE.MeshBasicMaterial( { color: "#FFFFFF" } );
-    //   var mesh = new THREE.Mesh( geometry, material );
-    //   var pad = world.createEntity();
-    //   pad
-    //     .addComponent(FTTUpdatable)
-    //     .addComponent(Object3D, {
-    //         value: mesh
-    //     })
-    //     .addComponent(Transform)
-    //     .addComponent(Parent, { value: world.entityManager.getEntityByName("playingGroup") })
-    //     .addComponent(Active);
-    // }
 
     // Scene
     world

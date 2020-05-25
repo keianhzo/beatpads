@@ -120,11 +120,11 @@ export class ElementSystem extends System {
             mappings: {
               hit: {
                 url: "assets/sounds/336933__free-rush__coin4.ogg",
-                volume: 2,
+                volume: 2
               },
               miss: {
                 url: "assets/sounds/miss.ogg",
-                volume: 2,
+                volume: 2
               }
             }
           });
@@ -138,25 +138,25 @@ export class ElementSystem extends System {
       }
     }
 
-    this.queries.colliding.results.forEach(entity => {
-      let collision = entity.getComponent(Colliding);
-      let hasBall = entity.hasComponent(Ball);
-      let ball = hasBall ? entity : collision.collidingWith[0];
-      let block = !hasBall ? entity : collision.collidingWith[0];
+    // this.queries.colliding.results.forEach(entity => {
+    //   let collision = entity.getComponent(Colliding);
+    //   let hasBall = entity.hasComponent(Ball);
+    //   let ball = hasBall ? entity : collision.collidingWith[0];
+    //   let block = !hasBall ? entity : collision.collidingWith[0];
 
-      if (block.hasComponent(Floor)) {
-        if (ball.hasComponent(Active)) {
-          block.getComponent(Sound).sound.play();
-          ball.removeComponent(Active);
-          // Wait a bit before spawning a new bullet from the generator
-          ball.addComponent(FloorCollided);
-        }
-      } else {
-        if (block.hasComponent(Sound)) {
-          block.getComponent(Sound).sound.play();
-        }
-      }
-    });
+    //   if (block.hasComponent(Floor)) {
+    //     if (ball.hasComponent(Active)) {
+    //       block.getComponent(Sound).sound.play();
+    //       ball.removeComponent(Active);
+    //       // Wait a bit before spawning a new bullet from the generator
+    //       ball.addComponent(FloorCollided);
+    //     }
+    //   } else {
+    //     if (block.hasComponent(Sound)) {
+    //       block.getComponent(Sound).sound.play();
+    //     }
+    //   }
+    // });
   }
 }
 
